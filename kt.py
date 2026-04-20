@@ -26,21 +26,23 @@ print(result[0])
 ################################################################################
 
 # №2
-
 # [ ['isbn', 'title', 'author', quantity, price], [...], ... ]
 
 def reformatRow(row):
     return [row[0],f"{row[1]}, {row[2]}", row[3], row[4]]
 
-def searchIn(yList, word):
-  isIn = lambda w: word.lower() in w[1].lower()
 
-  newList = compose_left(filterF(isIn), mapF(reformatRow), list)
+@curry
+def searchIn(word, row):
+  return word.lower() in row[1].lower()
+
+
+def getSecondBooks(yList, word):
+  newList = compose_left(filterF(searchIn(word)), mapF(reformatRow), list)
   return newList(yList)
 
-
-newRow = searchIn(result, 'Python')
-print(newRow)
+result2 = getSecondBooks(result, 'pYtHoN')
+print(result2)
 
 ################################################################################
 
@@ -58,5 +60,5 @@ def toTuple(yList):
   return newList(yList)
 
 
-testingTuple = toTuple(newRow)
-print(testingTuple)
+result3 = toTuple(result2)
+print(result3)
