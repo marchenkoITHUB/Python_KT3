@@ -13,11 +13,10 @@ def castTypes(row):
     return [row[0], row[1], row[2], int(row[3]), float(row[4])]
 
 
-parseThingy = compose_left(readFile, splitRegex(r'\n'), lambda lines: lines[1:], mapF(splitRegex(r'\|')), mapF(castTypes),list)
+def getBooks(yFile):
+    res = compose_left(readFile, splitRegex(r'\n'), lambda lines: lines[1:], mapF(splitRegex(r'\|')), mapF(castTypes),list)
+    return res(yFile)
 
-
-def getBooks(filename):
-    return parseThingy(filename)
 
 
 result = getBooks("books.csv")
